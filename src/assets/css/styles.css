@@ -102,7 +102,6 @@ header {
   top: 0;
   z-index: 10;
   background: #fff;
-  border-bottom: 1px solid var(--gray-100);
 }
 
 header .wrap {
@@ -113,6 +112,50 @@ header .wrap {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+header .gnb {
+  background: #fff;
+  border-top: 1px solid var(--gray-100);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+header .gnb ul {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  border-left: 1px solid var(--gray-200);
+}
+
+header .gnb li {
+  position: relative;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-900);
+  white-space: nowrap;
+  cursor: pointer;
+  border-right: 1px solid var(--gray-200);
+  transition: color 0.15s ease;
+}
+
+header .gnb li:hover {
+  color: var(--blue);
+}
+
+header .gnb li.active {
+  color: var(--blue);
+}
+
+header .gnb li.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--blue);
 }
 
 header .m_logo_name img {
@@ -148,7 +191,9 @@ header .right_btn {
   padding: 8px 14px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .logout_btn:hover {

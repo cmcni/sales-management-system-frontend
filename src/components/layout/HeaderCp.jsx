@@ -1,12 +1,20 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { imagesURL } from 'assets/images';
 import { ROUTES } from 'utils/const/routes';
 import { apiLogout } from 'apis/account';
 import { session } from 'utils/storage/storage';
 
+const MENU = {
+  MANAGEMENT_LIST: { label: '관리 리스트', route: '' },
+  SALES_STATUS_LIST: { label: '매출 현황 리스트', route: '' },
+  ESTIMATE_LIST: { label: '견적 리스트', route: '' },
+  ETC: { label: '기타', route: '' },
+};
+
 const HeaderCp = ({ headerTitle = '' }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isLoggined = session.getToken();
 
   const onClickLogout = () => {
@@ -34,6 +42,20 @@ const HeaderCp = ({ headerTitle = '' }) => {
           </button>
         )}
       </div>
+
+      {/* 메뉴 */}
+      <nav className="gnb">
+        <ul>
+          {Object.entries(MENU)?.map(([key, m]) => {
+            const active = !!m?.route && location.pathname === m.route;
+            return (
+              <li key={key} className={active ? 'active' : ''} onClick={() => m?.route && navigate(m.route)}>
+                {m?.label}
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
     </header>
   );
 };
