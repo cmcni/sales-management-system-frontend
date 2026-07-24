@@ -1,7 +1,5 @@
 import React from 'react';
-// import 'assets/css/common.css';
-// import 'assets/css/main.css';
-// import 'assets/NotoKR-all/stylesheet.css';
+import 'assets/css/styles.css';
 import Routes from 'routes/routes';
 
 function App() {

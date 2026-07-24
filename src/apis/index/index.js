@@ -10,6 +10,7 @@ axiosInstance.defaults.headers['Accept-Language'] = 'ko-KR';
 export const KEY_API = {
   AUTH: '/auth',
   ACCOUNT: '/account',
+  USER: '/user',
 };
 export const defaultSort = {
   sort: 'createdDate',

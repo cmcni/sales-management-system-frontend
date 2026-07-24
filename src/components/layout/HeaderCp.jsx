@@ -6,8 +6,7 @@ const HeaderCp = ({ headerTitle = '' }) => {
     <header>
       <div className="wrap">
         <div className="m_logo_name">
-          {/* <img src={`${imagesURL}/pc_logo.webp`} width="27px" style={{ cursor: 'pointer' }} alt="logo" />{' '} */}
-          <img src={`${imagesURL}/EPIKAR LOGO_1.png`} width="30px" />
+          <img src={`${imagesURL}/pc_logo.png`} width="300px" style={{ cursor: 'pointer' }} alt="logo" />{' '}
         </div>
         <h1 className="FontS20B">{headerTitle}</h1>
       </div>
