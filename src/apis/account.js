@@ -8,7 +8,7 @@ export async function apiUserSignUp(obj, apiSucc) {
       apiSucc(resResult);
     })
     .catch((error) => {
-      if (error?.response?.data) apiSucc(error.response.data);
+      apiSucc(error?.response?.data ?? { success: false, message: error.message });
     });
 }
 
@@ -24,15 +24,10 @@ export async function apiUserSignUpRoleType(apiSucc) {
     });
 }
 
-export async function apiLogin(email, password, apiSucc) {
-  const obj = {
-    email,
-    password,
-  };
+export async function apiLogin(obj, apiSucc) {
   await axiosInstance
-    .post(`${KEY_API.AUTH}/getToken`, obj)
+    .post(`${KEY_API.AUTHENTICATION}/login`, obj)
     .then((res) => {
-      // [TODO] getResponse함수는 server에서 오는 response 형식에 맞추어 변경하여 사용
       const resResult = getResponse(res);
       apiSucc(resResult);
     })

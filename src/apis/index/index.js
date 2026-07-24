@@ -8,7 +8,7 @@ axiosInstance.defaults.baseURL = baseURL;
 axiosInstance.defaults.headers['Accept-Language'] = 'ko-KR';
 
 export const KEY_API = {
-  AUTH: '/auth',
+  AUTHENTICATION: 'authentication',
   ACCOUNT: '/account',
   USER: '/user',
 };

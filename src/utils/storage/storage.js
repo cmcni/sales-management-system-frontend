@@ -9,6 +9,8 @@ export const KEY_STORAGE = {
 
   NICE_CALLBACK: 'niceCallback',
   NICE_CALLBACK_URL: 'niceCallbackUrl',
+
+  SAVED_EMAIL: 'savedEmail',
 };
 
 //===========================[LOGIN]===================================
@@ -57,4 +59,15 @@ export const session = Object.freeze({
   setRegisterTerms,
   getRegisterTerms,
   removeRegisterTerms,
+});
+
+//===========================[SAVED EMAIL]===================================
+const getSavedEmail = () => localStorage.getItem(KEY_STORAGE.SAVED_EMAIL) || '';
+const setSavedEmail = (email) => localStorage.setItem(KEY_STORAGE.SAVED_EMAIL, email);
+const removeSavedEmail = () => localStorage.removeItem(KEY_STORAGE.SAVED_EMAIL);
+
+export const local = Object.freeze({
+  getSavedEmail,
+  setSavedEmail,
+  removeSavedEmail,
 });
