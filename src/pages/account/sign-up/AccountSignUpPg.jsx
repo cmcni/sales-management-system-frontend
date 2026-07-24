@@ -41,9 +41,7 @@ const AccountSignUpPg = () => {
       if (res.success) {
         navigate(ROUTES.ACCOUNT_LOGIN);
       } else {
-        alert(
-          '로그인에 실패하였습니다 \n .env파일에 server url (REACT_APP_SERVER)를 변경해 주세요. \n .env 파일 변경 시 project 재시작 해야 합니다. '
-        );
+        alert(res?.message);
       }
     };
 
