@@ -26,7 +26,7 @@ const AccountLoginPg = () => {
         session.setLoginUser(userInfo);
         if (saveId) local.setSavedEmail(emailAddress);
         else local.removeSavedEmail();
-        navigate(ROUTES.MAIN);
+        navigate(ROUTES.MANAGEMENT_LIST);
       } else {
         alert(res.message);
       }
@@ -50,7 +50,7 @@ const AccountLoginPg = () => {
 
   return (
     <LayoutCp headerTitle="로그인" button="close" onClickClose={() => navigate(ROUTES.LOGIN_MAIN)}>
-      <section className="content_body">
+      <section className="account_content_body">
         <div className="wrap">
           <dl className="login_title_dl"></dl>
           <ul className="join_ul">

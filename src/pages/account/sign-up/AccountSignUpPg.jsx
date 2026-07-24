@@ -80,11 +80,8 @@ const AccountSignUpPg = () => {
 
   return (
     <LayoutCp headerTitle="회원가입" button="close" onClickClose={() => navigate(ROUTES.ACCOUNT_LOGIN)}>
-      <section className="content_body">
+      <section className="account_content_body">
         <div className="wrap">
-          <dl className="login_title_dl">
-            <dd className="FontS14"></dd>
-          </dl>
           <ul className="join_ul">
             <li>
               <h3 className="FontS16B">
@@ -194,12 +191,14 @@ const AccountSignUpPg = () => {
           </ul>
         </div>
 
-        <button className="Bfix_btn" onClick={onClickValidationSignUp}>
-          제출
-        </button>
-        <button className="Bfix_btn" onClick={() => navigate(ROUTES.ACCOUNT_LOGIN)}>
-          이전
-        </button>
+        <div className="join_btn">
+          <button className="Bfix_btn" onClick={onClickValidationSignUp}>
+            제출
+          </button>
+          <button className="Bfix_btn" onClick={() => navigate(ROUTES.ACCOUNT_LOGIN)}>
+            이전
+          </button>
+        </div>
       </section>
     </LayoutCp>
   );

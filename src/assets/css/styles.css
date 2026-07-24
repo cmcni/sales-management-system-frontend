@@ -92,6 +92,8 @@ p {
 
 /* App shell */
 .body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background: var(--gray-50);
 }
@@ -126,6 +128,11 @@ header .gnb ul {
   display: flex;
   overflow-x: auto;
   border-left: 1px solid var(--gray-200);
+  -ms-overflow-style: none;
+}
+
+header .gnb ul::-webkit-scrollbar {
+  display: none;
 }
 
 header .gnb li {
@@ -205,7 +212,7 @@ header .right_btn {
 .content_body {
   width: 100%;
   max-width: 1200px;
-  margin: 25px auto 80px;
+  margin: 10px auto 80px;
   padding: 20px;
   background: #fff;
   border: 1.5px solid transparent;
@@ -226,6 +233,22 @@ header .right_btn {
     box-shadow: none;
     padding: 24px 20px 32px;
   }
+}
+
+.account_content_body {
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border: 1.5px solid transparent;
+  border-radius: 20px;
+}
+
+.account_content_body .wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 8px;
 }
 
 .login_title_dl {
@@ -291,6 +314,17 @@ header .right_btn {
   padding-left: 2px;
   color: var(--red);
   font-size: 13px;
+}
+
+.join_btn {
+  display: flex;
+  gap: 10px;
+  max-width: 480px;
+}
+
+.join_btn .Bfix_btn {
+  flex: 1;
+  margin: 0;
 }
 
 .find_idpw {
@@ -393,4 +427,102 @@ header .right_btn {
 .content_body > .Bfix_btn ~ .Bfix_btn:hover {
   background: var(--gray-50);
   color: var(--gray-700);
+}
+
+.account_content_body > .Bfix_btn ~ .Bfix_btn,
+.join_btn > .Bfix_btn ~ .Bfix_btn {
+  background: transparent;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.account_content_body > .Bfix_btn ~ .Bfix_btn:hover,
+.join_btn > .Bfix_btn ~ .Bfix_btn:hover {
+  background: var(--gray-50);
+  color: var(--gray-700);
+}
+
+/* Search bar */
+.search_bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.search_item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.search_item h3 {
+  color: var(--gray-700);
+}
+
+.search_item input,
+.search_item select {
+  height: 40px;
+  padding: 0 12px;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: var(--gray-100);
+  color: var(--gray-900);
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.search_item input::placeholder {
+  color: var(--gray-500);
+}
+
+.search_item input:focus,
+.search_item select:focus {
+  background: #fff;
+  border-color: var(--blue);
+}
+
+.search_item select {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 140px;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238B95A1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+}
+
+.search_date_range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray-500);
+}
+
+.search_date_range input {
+  width: 150px;
+}
+
+.search_btn {
+  height: 40px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 10px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.search_btn:hover {
+  background: var(--blue-dark);
 }
