@@ -12,11 +12,6 @@ export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to={ROUTES.MAIN} />} />
-        <Route path={ROUTES_BIG_KEY.BIG_KEY} element={<Navigate to={ROUTES.MAIN} />} />
-
-        <Route path={ROUTES.MAIN} element={<MainPg />} />
-
         {/* 인증을 하지 않아야만 접속가능 페이지 (로그인 성공 시, 해당페이지 접속 불가) */}
         <Route element={<PrivateRoute authRouter={false} />}>
           <Route path={ROUTES.ACCOUNT_LOGIN} element={<AccountLoginPg />} />
@@ -25,6 +20,9 @@ export function Router() {
 
         {/* 인증을 해야만 접속가능 페이지 (로그인후 accessToken이 브라우저에 저장되어 있는지 체크) */}
         <Route element={<PrivateRoute authRouter />}>
+          <Route path={ROUTES.MAIN} element={<MainPg />} />
+          <Route path="/" element={<Navigate to={ROUTES.MAIN} />} />
+          <Route path={ROUTES_BIG_KEY.BIG_KEY} element={<Navigate to={ROUTES.MAIN} />} />
           {/* <Route path={ROUTES.TD_RESERVATION} element={<TestDrivingReservationPg />} /> */}
         </Route>
       </Routes>

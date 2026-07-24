@@ -6,6 +6,6 @@ import { session } from 'utils/storage/storage';
 export default function PrivateRoute({ authRouter }) {
   const isToken = session.getToken();
 
-  if (authRouter) return isToken ? <Outlet /> : <Navigate to={ROUTES.LOGIN_MAIN} />;
+  if (authRouter) return isToken ? <Outlet /> : <Navigate to={ROUTES.ACCOUNT_LOGIN} />;
   else return isToken ? <Navigate to={ROUTES.MAIN} /> : <Outlet />;
 }

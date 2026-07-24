@@ -138,6 +138,24 @@ header .right_btn {
   line-height: 0;
 }
 
+.logout_btn {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: var(--gray-500);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.logout_btn:hover {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
 /* Content */
 .content_body {
   width: 100%;

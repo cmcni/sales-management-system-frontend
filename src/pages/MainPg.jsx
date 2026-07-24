@@ -18,6 +18,7 @@ const MainPg = () => {
   return (
     <LayoutCp headerTitle="">
       <h1>MainPage</h1>
+
       <div style={{ border: '1px solid', padding: '10px' }}>
         <h3>
           <img src={`${imagesURL}/search.png`} width="24" alt="search" /> &nbsp; Route

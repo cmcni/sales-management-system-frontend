@@ -36,11 +36,8 @@ export async function apiLogin(obj, apiSucc) {
     });
 }
 
-export async function apiLogout(email, apiSucc) {
-  const obj = {
-    email,
-  };
-  await axiosInstance.post(`${KEY_API.ACCOUNT}/logout`, obj).then((res) => {
+export async function apiLogout(apiSucc) {
+  await axiosInstance.get(`${KEY_API.AUTHENTICATION}/logout`).then((res) => {
     const resResult = getResponse(res);
     apiSucc(resResult);
   });
