@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { imagesURL } from 'assets/images';
 import { ROUTES } from 'utils/const/routes';
 import { apiLogout } from 'apis/account';
 import { session } from 'utils/storage/storage';
+import { IoChevronDown } from 'react-icons/io5';
 
 const MENU = {
   MANAGEMENT_LIST: { label: '관리 리스트', route: ROUTES.MANAGEMENT_LIST },
@@ -16,6 +17,18 @@ const HeaderCp = ({ headerTitle = '' }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggined = session.getToken();
+  const loginUser = session.getLoginUser();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false);
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, []);
 
   const onClickLogout = () => {
     const apiSucc = (res) => {
@@ -29,6 +42,9 @@ const HeaderCp = ({ headerTitle = '' }) => {
     apiLogout(apiSucc);
   };
 
+  const roleLabel = loginUser?.roleType || '';
+  const userDisplay = loginUser?.name ? `${loginUser.name} ${roleLabel ? `(${roleLabel})` : ''}` : '내 계정';
+
   return (
     <header>
       <div className="wrap">
@@ -37,9 +53,17 @@ const HeaderCp = ({ headerTitle = '' }) => {
         </div>
         <h1 className="FontS20B">{headerTitle}</h1>
         {isLoggined && (
-          <button className="logout_btn" onClick={onClickLogout}>
-            로그아웃
-          </button>
+          <div className="user_menu" ref={menuRef}>
+            <button className="user_menu_btn" onClick={() => setMenuOpen((v) => !v)}>
+              {userDisplay}
+              <IoChevronDown size={14} />
+            </button>
+            {menuOpen && (
+              <ul className="user_menu_dropdown">
+                <li onClick={onClickLogout}>로그아웃</li>
+              </ul>
+            )}
+          </div>
         )}
       </div>
 
