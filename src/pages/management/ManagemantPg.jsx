@@ -4,6 +4,7 @@ import CommListTableCp from 'components/form/list/CommListTableCp';
 import CommSelectBoxCp from 'components/form/search/CommSelectBoxCp';
 import CommSearchDateCp from 'components/form/search/CommSearchDateCp';
 import CommSearchTextInputCp from 'components/form/search/CommSearchTextInputCp';
+import SalesReportModalCp from 'components/modal/SalesReportModalCp';
 import { today, addDate } from 'utils/date/moment';
 import { RiFileExcel2Line } from 'react-icons/ri';
 import { BsFileEarmarkMinus, BsFileEarmarkPlus } from 'react-icons/bs';
@@ -30,6 +31,7 @@ const ManagemantPg = () => {
   const [orderer, setOrderer] = useState('');
   const [division, setDivision] = useState('CONTRACT');
   const [autoRefresh, setAutoRefresh] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   const onClickSearch = () => {
     const obj = { startDate, endDate, invoiceIssued, constructionName, orderer, division };
@@ -98,7 +100,7 @@ const ManagemantPg = () => {
               <RiFileExcel2Line />
               저장
             </button>
-            <button className="ghost_btn" onClick={onClickSearch}>
+            <button className="ghost_btn" onClick={() => setShowRegisterModal(true)}>
               <BsFileEarmarkPlus />
               신규
             </button>
@@ -110,6 +112,8 @@ const ManagemantPg = () => {
         </div>
         <CommListTableCp columns={COLUMNS} data={[]} minRows={15} />
       </section>
+
+      {showRegisterModal && <SalesReportModalCp onClose={() => setShowRegisterModal(false)} />}
     </LayoutCp>
   );
 };

@@ -631,3 +631,277 @@ header .right_btn {
 .comm_list_table tbody tr:hover td {
   background: var(--gray-50);
 }
+
+/* Sales report modal */
+.modal_overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 23, 32, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sales_report_modal {
+  width: 640px;
+  max-width: 92vw;
+  height: 640px;
+  max-height: 90vh;
+  min-width: 480px;
+  min-height: 400px;
+  resize: both;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.sales_report_titlebar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+  border-radius: 12px 12px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.sales_report_titlebar > span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sales_report_titlebar .win_controls {
+  margin-left: auto;
+  align-items: center;
+  display: flex;
+  gap: 4px;
+}
+
+.sales_report_titlebar .win_controls button {
+  border: none;
+  background: transparent;
+  color: var(--gray-500);
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sales_report_titlebar .win_controls button:hover {
+  background: var(--gray-200);
+}
+
+.sales_report_body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.sales_report_tabs {
+  width: 88px;
+  flex-shrink: 0;
+  background: var(--gray-50);
+  border-right: 1px solid var(--gray-200);
+  padding-top: 8px;
+}
+
+.sales_report_tabs .tab_title {
+  text-align: center;
+  padding: 12px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue-dark);
+}
+
+.sales_report_tabs button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 8px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-700);
+  cursor: pointer;
+}
+
+.sales_report_tabs button.active {
+  background: var(--blue);
+  color: #fff;
+}
+
+.sales_report_tabs button:hover:not(.active) {
+  background: var(--gray-100);
+}
+
+.sales_report_main {
+  flex: 1;
+  padding: 16px 20px 24px;
+  overflow-y: auto;
+}
+
+.sales_report_main h2 {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.sales_report_actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sales_report_actions button {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-700);
+  cursor: pointer;
+}
+
+.sales_report_actions button:hover {
+  background: var(--gray-50);
+}
+
+.sales_report_section_title {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--blue);
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin: 4px 0 10px;
+}
+
+.sales_report_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 14px;
+  margin-bottom: 8px;
+}
+
+.sr_field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sr_field.full {
+  grid-column: 1 / -1;
+}
+
+.sr_field.checkbox_field {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.sr_field label {
+  font-size: 12px;
+  color: var(--gray-500);
+}
+
+.sr_field input,
+.sr_field select,
+.sr_field textarea {
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.sr_field input:focus,
+.sr_field select:focus,
+.sr_field textarea:focus {
+  background: #fff;
+  border-color: var(--blue);
+}
+
+.sr_field textarea {
+  height: 56px;
+  padding: 6px 8px;
+  resize: none;
+}
+
+.sr_field.checkbox_field input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+.sales_report_bottom_actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+  padding-top: 16px;
+}
+
+.sales_report_bottom_actions button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-radius: 6px;
+  border: 1px solid var(--gray-200);
+  padding: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sales_report_bottom_actions .badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sales_report_bottom_actions .badge.a {
+  background: #e05a5a;
+}
+
+.sales_report_bottom_actions .badge.b {
+  background: var(--blue);
+}
+
+.sales_report_bottom_actions .badge.c {
+  background: #f5a623;
+}
+
+.sales_report_bottom_actions .label {
+  font-size: 13px;
+  color: var(--gray-700);
+  font-weight: 600;
+}
