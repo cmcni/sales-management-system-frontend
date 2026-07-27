@@ -6,7 +6,7 @@ import { apiLogout } from 'apis/account';
 import { session } from 'utils/storage/storage';
 
 const MENU = {
-  MANAGEMENT_LIST: { label: '관리 리스트', route: '' },
+  MANAGEMENT_LIST: { label: '관리 리스트', route: ROUTES.MANAGEMENT_LIST },
   SALES_STATUS_LIST: { label: '매출 현황 리스트', route: '' },
   ESTIMATE_LIST: { label: '견적 리스트', route: '' },
   ETC: { label: '기타', route: '' },
@@ -44,18 +44,20 @@ const HeaderCp = ({ headerTitle = '' }) => {
       </div>
 
       {/* 메뉴 */}
-      <nav className="gnb">
-        <ul>
-          {Object.entries(MENU)?.map(([key, m]) => {
-            const active = !!m?.route && location.pathname === m.route;
-            return (
-              <li key={key} className={active ? 'active' : ''} onClick={() => m?.route && navigate(m.route)}>
-                {m?.label}
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      {isLoggined && (
+        <nav className="gnb">
+          <ul>
+            {Object.entries(MENU)?.map(([key, m]) => {
+              const active = !!m?.route && location.pathname === m.route;
+              return (
+                <li key={key} className={active ? 'active' : ''} onClick={() => m?.route && navigate(m.route)}>
+                  {m?.label}
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 };
