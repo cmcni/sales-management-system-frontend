@@ -7,5 +7,5 @@ export default function PrivateRoute({ authRouter }) {
   const isToken = session.getToken();
 
   if (authRouter) return isToken ? <Outlet /> : <Navigate to={ROUTES.ACCOUNT_LOGIN} />;
-  else return isToken ? <Navigate to={ROUTES.MAIN} /> : <Outlet />;
+  else return isToken ? <Navigate to={ROUTES.MANAGEMENT_LIST} /> : <Outlet />;
 }

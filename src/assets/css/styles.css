@@ -211,16 +211,15 @@ header .right_btn {
 /* Content */
 .content_body {
   width: 100%;
-  max-width: 1200px;
-  margin: 10px auto 80px;
-  padding: 20px;
+  /* max-width: 1200px; */
+  margin: 0px auto 0px;
+  padding: 20px 30px 20px 30px;
   background: #fff;
   border: 1.5px solid transparent;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 .content_body .wrap {
-  /* max-width: 480px; */
   margin: 0 auto;
   padding: 0 0 8px;
 }
@@ -448,9 +447,8 @@ header .right_btn {
   flex-wrap: wrap;
   align-items: flex-end;
   gap: 16px;
-  padding-bottom: 24px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid var(--gray-100);
+  /* padding-bottom: 24px; */
+  /* border-bottom: 1px solid var(--gray-100); */
 }
 
 .search_item {
@@ -461,6 +459,13 @@ header .right_btn {
 
 .search_item h3 {
   color: var(--gray-700);
+}
+
+.search_item h3::before {
+  content: '|';
+  color: var(--blue);
+  margin-right: 4px;
+  font-weight: 700;
 }
 
 .search_item input,
@@ -525,4 +530,104 @@ header .right_btn {
 
 .search_btn:hover {
   background: var(--blue-dark);
+}
+
+.auto_refresh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  font-size: 13px;
+  color: var(--gray-700);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.auto_refresh input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+.action_btns {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.ghost_btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 18px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--gray-700);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ghost_btn svg {
+  flex-shrink: 0;
+  font-size: 15px;
+}
+
+.ghost_btn:hover {
+  background: var(--gray-50);
+  border-color: var(--gray-300);
+}
+
+.ghost_btn.danger {
+  color: var(--red);
+  border-color: #fbd4d8;
+}
+
+.ghost_btn.danger:hover {
+  background: #fef1f2;
+  border-color: var(--red);
+}
+
+/* Comm list table */
+.comm_list_table {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.comm_list_table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comm_list_table th {
+  background: var(--gray-50);
+  color: var(--gray-700);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  padding: 12px 8px;
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
+  white-space: nowrap;
+}
+
+.comm_list_table td {
+  font-size: 13px;
+  color: var(--gray-900);
+  text-align: center;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--gray-100);
+  white-space: nowrap;
+}
+
+.comm_list_table tbody tr:hover td {
+  background: var(--gray-50);
 }
