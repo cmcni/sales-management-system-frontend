@@ -42,8 +42,8 @@ const HeaderCp = ({ headerTitle = '' }) => {
     apiLogout(apiSucc);
   };
 
-  const roleLabel = loginUser?.roleType || '';
-  const userDisplay = loginUser?.name ? `${loginUser.name} ${roleLabel ? `(${roleLabel})` : ''}` : '내 계정';
+  const roleLabel = loginUser?.userRoleTypeName || '';
+  const userDisplay = loginUser?.userName ? `${loginUser.userName} ${roleLabel ? `(${roleLabel})` : ''}` : '내 계정';
 
   return (
     <header>
