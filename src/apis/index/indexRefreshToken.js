@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { session } from 'utils/storage/storage';
+import { ROUTES } from 'utils/const/routes';
 
 const timeout = 50000;
 export const axiosInstanceWithRefreshToken = axios.create({ timeout });
@@ -29,8 +30,12 @@ axiosInstanceWithRefreshToken.interceptors.response.use(
   async (error) => {
     const { config: originalRequest, response } = error;
 
-    if (response !== undefined && [401].includes(response.status)) {
-      if (!originalRequest.url.includes('refreshToken') && !originalRequest._retry) {
+    // 로그인/회원가입처럼 토큰 없이 보낸 요청의 401은 갱신 대상이 아니라 호출부에서 그대로 처리
+    const isAuthenticatedRequest = !!originalRequest?.headers?.Authorization;
+    const isRefreshTokenRequest = originalRequest?.url?.includes('refreshToken');
+
+    if (response?.status === 401 && isAuthenticatedRequest && !isRefreshTokenRequest) {
+      if (!originalRequest._retry) {
         originalRequest._retry = true;
 
         if (isRefreshToken) {
@@ -50,23 +55,23 @@ axiosInstanceWithRefreshToken.interceptors.response.use(
               isRefreshToken = false;
             });
           } catch (err) {
+            isRefreshToken = false;
             session.removeToken();
             session.removeRefreshToken();
             session.removeLoginUser();
-            console.log('apiGetRefreshToken Error');
-            window.location.reload();
+            window.location.href = ROUTES.ACCOUNT_LOGIN;
+            return Promise.reject(error);
           }
           return axiosInstanceWithRefreshToken(originalRequest);
         }
       }
-      return Promise.reject(error);
     }
     return Promise.reject(error);
   }
 );
 
 export async function apiGetRefreshToken(apiSucc) {
-  return await axiosInstanceWithRefreshToken.post(`auth/refreshToken`).then((res) => {
+  return await axiosInstanceWithRefreshToken.post(`authentication/refreshToken`).then((res) => {
     const resResult = getResponse(res);
     if (resResult?.success) {
       const { authToken, email, name, cellNumber, birthDate, socialLogin } = resResult?.data;

@@ -1,7 +1,10 @@
+import CommObjectValueSelectCp from 'components/form/select/CommObjectValueSelectCp';
+import BuyerSelectCp from 'components/form/select/BuyerSelectCp';
 import React, { useState } from 'react';
-import { IoIosClose, IoIosSquareOutline, IoMdClose, IoMdSquareOutline } from 'react-icons/io';
-import { MdMinimize } from 'react-icons/md';
-import { CONST_MANAGEMENT_TYPE } from 'utils/const/project';
+import { IoClose } from 'react-icons/io5';
+import { LuMaximize, LuMinimize } from 'react-icons/lu';
+
+import { CONST_DELIVERY_TYPE, CONST_PAYMENT_TYPE } from 'utils/const/project';
 
 const initForm = {
   orderer: '',
@@ -32,47 +35,31 @@ const initForm = {
 };
 
 const SalesReportModalCp = ({ onClose }) => {
-  const [division, setDivision] = useState('CONTRACT');
   const [form, setForm] = useState(initForm);
+  const [isMaximized, setIsMaximized] = useState(false);
 
   const onChangeField = (key) => (e) => {
     const value = e?.target?.type === 'checkbox' ? e.target.checked : e.target.value;
     setForm((prev) => ({ ...prev, [key]: value }));
   };
+  const setField = (key) => (value) => setForm((prev) => ({ ...prev, [key]: value }));
 
   return (
     <div className="modal_overlay">
-      <div className="sales_report_modal">
+      <div className={`sales_report_modal${isMaximized ? ' maximized' : ''}`}>
         <div className="sales_report_titlebar">
           <span>세일즈 리포트</span>
           <div className="win_controls">
-            <button type="button">
-              <MdMinimize size={15} />
-            </button>
-            <button type="button">
-              <IoMdSquareOutline size={15} />
+            <button type="button" onClick={() => setIsMaximized((v) => !v)}>
+              {isMaximized ? <LuMinimize size={15} /> : <LuMaximize size={15} />}
             </button>
             <button type="button" onClick={onClose}>
-              <IoMdClose size={15} />
+              <IoClose size={15} />
             </button>
           </div>
         </div>
 
         <div className="sales_report_body">
-          <nav className="sales_report_tabs">
-            <div className="tab_title">구분</div>
-            {Object.values(CONST_MANAGEMENT_TYPE)?.map((d) => (
-              <button
-                key={d.value}
-                type="button"
-                className={division === d.value ? 'active' : ''}
-                onClick={() => setDivision(d.value)}
-              >
-                {d.label}
-              </button>
-            ))}
-          </nav>
-
           <div className="sales_report_main">
             {/* <h2>세일즈 레포트</h2> */}
 
@@ -83,24 +70,17 @@ const SalesReportModalCp = ({ onClose }) => {
               <button type="button">
                 <span>저장</span>
               </button>
-              {/* <button type="button" onClick={onClose}>
-                <span>닫기</span>
-              </button> */}
             </div>
 
             <div className="sales_report_section_title">영업부</div>
             <div className="sales_report_grid">
               <div className="sr_field">
                 <label>발주처</label>
-                <input type="text" value={form.orderer} onChange={onChangeField('orderer')} />
+                <BuyerSelectCp value={form.orderer} setValue={setField('orderer')} />
               </div>
               <div className="sr_field">
                 <label>공사명</label>
                 <input type="text" value={form.constructionName} onChange={onChangeField('constructionName')} />
-              </div>
-              <div className="sr_field checkbox_field">
-                <input type="checkbox" checked={form.contractDone} onChange={onChangeField('contractDone')} />
-                <label>완료</label>
               </div>
 
               <div className="sr_field">
@@ -109,11 +89,12 @@ const SalesReportModalCp = ({ onClose }) => {
               </div>
               <div className="sr_field">
                 <label>계약금액</label>
-                <input type="text" value={form.contractAmount} onChange={onChangeField('contractAmount')} />
+                <input type="number" value={form.contractAmount} onChange={onChangeField('contractAmount')} />
               </div>
+
               <div className="sr_field">
-                <label>계약금율</label>
-                <input type="text" value={form.contractRate} onChange={onChangeField('contractRate')} />
+                <label>영업담당자</label>
+                <input type="text" value={form.salesManager} onChange={onChangeField('salesManager')} />
               </div>
 
               <div className="sr_field">
@@ -124,10 +105,7 @@ const SalesReportModalCp = ({ onClose }) => {
                   onChange={onChangeField('constructionPeriodStart')}
                 />
               </div>
-              <div className="sr_field">
-                <label>영업담당자</label>
-                <input type="text" value={form.salesManager} onChange={onChangeField('salesManager')} />
-              </div>
+
               <div className="sr_field">
                 <label>공사기간(종료)</label>
                 <input
@@ -139,20 +117,24 @@ const SalesReportModalCp = ({ onClose }) => {
 
               <div className="sr_field">
                 <label>대금결제방법</label>
-                <select value={form.paymentMethod} onChange={onChangeField('paymentMethod')}>
-                  <option value="">선택</option>
-                  <option value="CASH">현금</option>
-                  <option value="TRANSFER">계좌이체</option>
-                </select>
+                <CommObjectValueSelectCp
+                  value={form.paymentMethod}
+                  setValue={() => onChangeField('paymentMethod')}
+                  rowData={CONST_PAYMENT_TYPE}
+                  placeHolder="선택"
+                />
               </div>
+
               <div className="sr_field">
                 <label>배송방법</label>
-                <select value={form.deliveryMethod} onChange={onChangeField('deliveryMethod')}>
-                  <option value="">선택</option>
-                  <option value="DIRECT">직송(창고)</option>
-                  <option value="TRUCK">화물</option>
-                </select>
+                <CommObjectValueSelectCp
+                  value={form.deliveryMethod}
+                  setValue={() => onChangeField('deliveryMethod')}
+                  rowData={CONST_DELIVERY_TYPE}
+                  placeHolder="선택"
+                />
               </div>
+
               <div className="sr_field">
                 <label>발주일</label>
                 <input type="date" value={form.orderDate} onChange={onChangeField('orderDate')} />
@@ -170,14 +152,20 @@ const SalesReportModalCp = ({ onClose }) => {
                   onChange={onChangeField('deliveryConstructionDate')}
                 />
               </div>
+
               <div className="sr_field">
                 <label>물품수령지</label>
                 <input type="text" value={form.receivePlace} onChange={onChangeField('receivePlace')} />
               </div>
 
-              <div className="sr_field full">
-                <label>기타사항</label>
-                <textarea value={form.etc} onChange={onChangeField('etc')} />
+              <div className="sr_field">
+                <label>물품수령자(TEL)</label>
+                <input type="text" value={form.receiverTel} onChange={onChangeField('receiverTel')} />
+              </div>
+
+              <div className="sr_field">
+                <label>현장담당자(TEL)</label>
+                <input type="text" value={form.fieldManagerTel} onChange={onChangeField('fieldManagerTel')} />
               </div>
 
               <div className="sr_field">
@@ -188,18 +176,10 @@ const SalesReportModalCp = ({ onClose }) => {
                   onChange={onChangeField('constructionManagerTel')}
                 />
               </div>
-              <div className="sr_field">
-                <label>물품수령자</label>
-                <input type="text" value={form.receiver} onChange={onChangeField('receiver')} />
-              </div>
-              <div className="sr_field">
-                <label>현장담당자(TEL)</label>
-                <input type="text" value={form.fieldManagerTel} onChange={onChangeField('fieldManagerTel')} />
-              </div>
 
-              <div className="sr_field">
-                <label>물품수령자(TEL)</label>
-                <input type="text" value={form.receiverTel} onChange={onChangeField('receiverTel')} />
+              <div className="sr_field full">
+                <label>기타사항</label>
+                <textarea value={form.etc} onChange={onChangeField('etc')} />
               </div>
             </div>
 
