@@ -15,7 +15,7 @@ axiosInstanceWithRefreshToken.defaults.paramsSerializer = function (paramObj) {
 
 axiosInstanceWithRefreshToken.interceptors.request.use((config) => {
   let token = null;
-  if (config.url.includes('refreshToken')) token = session.getRefreshToken();
+  if (config.url.includes('refresh-token')) token = session.getRefreshToken();
   else token = session.getToken();
 
   if (!token) return config;
@@ -32,7 +32,7 @@ axiosInstanceWithRefreshToken.interceptors.response.use(
 
     // 로그인/회원가입처럼 토큰 없이 보낸 요청의 401은 갱신 대상이 아니라 호출부에서 그대로 처리
     const isAuthenticatedRequest = !!originalRequest?.headers?.Authorization;
-    const isRefreshTokenRequest = originalRequest?.url?.includes('refreshToken');
+    const isRefreshTokenRequest = originalRequest?.url?.includes('refresh-token');
 
     if (response?.status === 401 && isAuthenticatedRequest && !isRefreshTokenRequest) {
       if (!originalRequest._retry) {
@@ -71,13 +71,12 @@ axiosInstanceWithRefreshToken.interceptors.response.use(
 );
 
 export async function apiGetRefreshToken(apiSucc) {
-  return await axiosInstanceWithRefreshToken.post(`authentication/refreshToken`).then((res) => {
+  return await axiosInstanceWithRefreshToken.post(`authentication/refresh-token`).then((res) => {
     const resResult = getResponse(res);
     if (resResult?.success) {
-      const { authToken, email, name, cellNumber, birthDate, socialLogin } = resResult?.data;
+      const { authToken } = resResult?.data;
       if (authToken?.accessToken) session.setToken(authToken.accessToken);
       if (authToken?.refreshToken) session.setRefreshToken(authToken.refreshToken);
-      session.setLoginUser({ email, name, cellNumber, birthDate, socialLogin });
       apiSucc();
     }
   });

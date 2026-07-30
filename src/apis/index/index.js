@@ -12,6 +12,9 @@ export const KEY_API = {
   ACCOUNT: '/account',
   BUYER: '/buyer',
   USER: '/user',
+  PRODUCT: '/product',
+  PRODUCT_MODEL: '/product/model',
+  PRODUCT_CATEGORY: '/product/category',
 };
 export const defaultSort = {
   sort: 'createdDate',
