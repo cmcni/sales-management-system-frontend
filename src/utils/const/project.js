@@ -12,7 +12,7 @@ export const CONST_INVOICE_TYPE = {
 
 export const CONST_MANAGEMENT_TYPE = {
   CONTRACT: { label: '계약', value: 'CONTRACT' },
-  ESTIMATE: { label: '견적', value: 'ESTIMATE' },
+  PRE_ORDER: { label: '선발주', value: 'PRE_ORDER' },
 };
 
 // 대금결제 (결제 방법)
