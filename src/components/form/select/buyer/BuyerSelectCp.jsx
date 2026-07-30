@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiBuyerFindAll } from 'apis/buyer';
-import BuyerCreateModalCp from 'components/modal/BuyerCreateModalCp';
+import BuyerCreateModalCp from 'components/modal/buyer/BuyerCreateModalCp';
 
 const ADD_NEW_VALUE = '__ADD_NEW__';
 

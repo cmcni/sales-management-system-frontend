@@ -4,7 +4,7 @@ import CommListTableCp from 'components/form/list/CommListTableCp';
 import CommSelectBoxCp from 'components/form/search/CommSelectBoxCp';
 import CommSearchDateCp from 'components/form/search/CommSearchDateCp';
 import CommSearchTextInputCp from 'components/form/search/CommSearchTextInputCp';
-import SalesReportModalCp from 'components/modal/SalesReportModalCp';
+import SalesReportModalCp from 'components/modal/sales-report/SalesReportModalCp';
 import { today, addDate } from 'utils/date/moment';
 import { RiFileExcel2Line } from 'react-icons/ri';
 import { BsFileEarmarkMinus, BsFileEarmarkPlus } from 'react-icons/bs';
@@ -32,6 +32,7 @@ const ManagemantPg = () => {
   const [division, setDivision] = useState('CONTRACT');
   const [autoRefresh, setAutoRefresh] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [managementList, setManagementList] = useState([]);
 
   const onClickSearch = () => {
     const obj = { startDate, endDate, invoiceIssued, constructionName, orderer, division };
@@ -45,7 +46,7 @@ const ManagemantPg = () => {
   }, [autoRefresh, startDate, endDate, invoiceIssued, constructionName, orderer, division]);
 
   return (
-    <LayoutCp headerTitle="관리 리스트" button="close">
+    <LayoutCp headerTitle="관리 목록" button="close">
       <section className="content_body">
         <div className="search_bar">
           <CommSearchDateCp
@@ -110,7 +111,8 @@ const ManagemantPg = () => {
             </button>
           </div>
         </div>
-        <CommListTableCp columns={COLUMNS} data={[]} minRows={15} />
+        <span className="list_count">조회 {managementList.length}건</span>
+        <CommListTableCp columns={COLUMNS} data={managementList} minRows={15} />
       </section>
 
       {showRegisterModal && <SalesReportModalCp onClose={() => setShowRegisterModal(false)} />}
