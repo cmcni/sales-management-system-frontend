@@ -7,9 +7,10 @@ import { session } from 'utils/storage/storage';
 import { IoChevronDown } from 'react-icons/io5';
 
 const MENU = {
-  MANAGEMENT_LIST: { label: '관리 리스트', route: ROUTES.MANAGEMENT_LIST },
-  SALES_STATUS_LIST: { label: '매출 현황 리스트', route: '' },
-  ESTIMATE_LIST: { label: '견적 리스트', route: '' },
+  MANAGEMENT_LIST: { label: '관리 목록', route: ROUTES.MANAGEMENT_LIST },
+  SALES_STATUS_LIST: { label: '매출 현황 목록', route: '' },
+  ESTIMATE_LIST: { label: '견적 목록', route: '' },
+  PRODUCT_LIST: { label: '제품 목록', route: ROUTES.PRODUCT_LIST },
   ETC: { label: '기타', route: '' },
 };
 

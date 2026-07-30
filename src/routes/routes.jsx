@@ -7,6 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import AccountSignUpPg from 'pages/account/sign-up/AccountSignUpPg';
 import AccountLoginPg from 'pages/account/login/AccountLoginPg';
 import ManagemantPg from 'pages/management/ManagemantPg';
+import ProductListPg from 'pages/product/ProductListPg';
 
 export function Router() {
   return (
@@ -21,6 +22,7 @@ export function Router() {
         {/* 인증을 해야만 접속가능 페이지 (로그인후 accessToken이 브라우저에 저장되어 있는지 체크) */}
         <Route element={<PrivateRoute authRouter />}>
           <Route path={ROUTES.MANAGEMENT_LIST} element={<ManagemantPg />} />
+          <Route path={ROUTES.PRODUCT_LIST} element={<ProductListPg />} />
           <Route path="/" element={<Navigate to={ROUTES.MANAGEMENT_LIST} />} />
           <Route path={ROUTES_BIG_KEY.BIG_KEY} element={<Navigate to={ROUTES.MANAGEMENT_LIST} />} />
         </Route>

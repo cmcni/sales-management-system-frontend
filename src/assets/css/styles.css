@@ -95,7 +95,7 @@ p {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--gray-50);
+  background: #fff;
 }
 
 /* Header */
@@ -533,6 +533,11 @@ header .right_btn {
   cursor: pointer;
 }
 
+.cascade_select_row {
+  display: flex;
+  gap: 6px;
+}
+
 .search_date_range {
   display: flex;
   align-items: center;
@@ -624,6 +629,14 @@ header .right_btn {
   border-color: var(--red);
 }
 
+.list_count {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gray-700);
+  margin: 20px 0 10px;
+}
+
 /* Comm list table */
 .comm_list_table {
   width: 100%;
@@ -643,8 +656,7 @@ header .right_btn {
   font-weight: 700;
   text-align: center;
   padding: 12px 8px;
-  border-top: 1px solid var(--gray-200);
-  border-bottom: 1px solid var(--gray-200);
+  border: 1px solid var(--gray-200);
   white-space: nowrap;
 }
 
@@ -653,12 +665,12 @@ header .right_btn {
   color: var(--gray-900);
   text-align: center;
   padding: 10px 8px;
-  border-bottom: 1px solid var(--gray-100);
+  border: 1px solid var(--gray-200);
   white-space: nowrap;
 }
 
 .comm_list_table tbody tr:hover td {
-  background: var(--gray-50);
+  background: var(--blue-light);
 }
 
 /* Sales report modal */
