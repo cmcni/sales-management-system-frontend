@@ -1062,3 +1062,72 @@ header .right_btn {
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
+
+/* Product create modal */
+.product_create_modal {
+  width: 480px;
+}
+
+.product_create_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 16px;
+  padding: 20px;
+}
+
+.warning_text {
+  margin-top: 4px;
+  color: var(--red);
+  font-size: 11px;
+}
+
+/* Product category create modal */
+.category_create_modal {
+  width: 400px;
+}
+
+.category_suggest_list {
+  margin: -4px 0 4px;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  max-height: 140px;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.category_suggest_list li {
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--gray-700);
+  cursor: pointer;
+}
+
+.category_suggest_list li:hover {
+  background: var(--gray-50);
+  color: var(--blue);
+}
+
+.category_selected_hint {
+  font-size: 12px;
+  color: var(--blue);
+}
+
+.add_child_category_btn {
+  align-self: flex-start;
+  border: none;
+  background: transparent;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.add_child_category_btn:disabled {
+  color: var(--gray-300);
+  cursor: not-allowed;
+}
+
+.add_child_category_btn:hover:not(:disabled) {
+  text-decoration: underline;
+}
