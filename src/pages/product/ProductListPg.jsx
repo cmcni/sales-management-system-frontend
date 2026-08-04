@@ -33,7 +33,7 @@ const ProductListPg = () => {
   const [productName, setProductName] = useState('');
   const [modelName, setModelName] = useState('');
   const [recommendedPrice, setRecommendedPrice] = useState('');
-  const [productList, setProductList] = useState([]);
+
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [data, setData] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
@@ -41,10 +41,6 @@ const ProductListPg = () => {
   useEffect(() => {
     onClickSearch();
   }, []);
-
-  const onCreatedProduct = (product) => {
-    setProductList((prev) => [...prev, product]);
-  };
 
   const onClickSearch = () => {
     const apiSucc = (res) => {
@@ -110,8 +106,6 @@ const ProductListPg = () => {
               value={modelName}
               setValue={setModelName}
               fetchApi={apiProductModelFindAll}
-              createApi={apiProductModelCreate}
-              addNewLabel="+) 모델 추가하기"
               fieldLabel="모델명"
               modalTitle="모델 추가"
             />
@@ -129,10 +123,10 @@ const ProductListPg = () => {
           </button>
 
           <div className="action_btns">
-            <button className="ghost_btn">
+            {/* <button className="ghost_btn">
               <RiFileExcel2Line />
               Excel
-            </button>
+            </button> */}
             <button className="ghost_btn" onClick={() => setShowCreateModal(true)}>
               <BsFileEarmarkPlus />
               신규
@@ -155,9 +149,7 @@ const ProductListPg = () => {
         />
       </section>
 
-      {showCreateModal && (
-        <ProductCreateModalCp onClose={() => setShowCreateModal(false)} onCreated={onCreatedProduct} />
-      )}
+      {showCreateModal && <ProductCreateModalCp onClose={() => setShowCreateModal(false)} onCreated={onClickSearch} />}
     </LayoutCp>
   );
 };

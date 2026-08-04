@@ -58,10 +58,11 @@ const ProductCategoryCreateModalCp = ({ onClose, onCreated }) => {
       return;
     }
 
-    const finish = (res) => {
+    const finishWithName = (submittedName) => (res) => {
       setSubmitting(false);
       if (res.success) {
-        onCreated(res.data);
+        const createdId = res?.data?.id ?? res?.data;
+        onCreated({ id: createdId, name: submittedName });
         onClose();
       } else {
         alert(res?.message || '제품군 등록에 실패하였습니다.');
@@ -69,7 +70,7 @@ const ProductCategoryCreateModalCp = ({ onClose, onCreated }) => {
     };
 
     const createChildUnder = (parentId) => {
-      apiProductCategoryCreate({ name: childName, parentId }, finish);
+      apiProductCategoryCreate({ name: childName, parentId }, finishWithName(childName));
     };
 
     setSubmitting(true);
@@ -79,8 +80,10 @@ const ProductCategoryCreateModalCp = ({ onClose, onCreated }) => {
         createChildUnder(selectedParent.id);
       } else {
         apiProductCategoryCreate({ name: parentQuery, parentId: null }, (res) => {
-          if (res.success) createChildUnder(res.data.id);
-          else {
+          if (res.success) {
+            const newParentId = res?.data?.id ?? res?.data;
+            createChildUnder(newParentId);
+          } else {
             setSubmitting(false);
             alert(res?.message || '제품군 등록에 실패하였습니다.');
           }
@@ -91,7 +94,7 @@ const ProductCategoryCreateModalCp = ({ onClose, onCreated }) => {
       onCreated(selectedParent);
       onClose();
     } else {
-      apiProductCategoryCreate({ name: parentQuery, parentId: null }, finish);
+      apiProductCategoryCreate({ name: parentQuery, parentId: null }, finishWithName(parentQuery));
     }
   };
 

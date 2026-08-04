@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { IoClose } from 'react-icons/io5';
-import CommEntitySelectCp from 'components/form/select/common/CommEntitySelectCp';
 import ProductCategorySelectCp from 'components/form/select/product/ProductCategorySelectCp';
-import { apiProductCreate, apiProductModelFindAll, apiProductModelCreate } from 'apis/product';
+import ProductModelSelectCp from 'components/form/select/product/ProductModelSelectCp';
+import { apiProductCreate, apiProductCategoryFindAll } from 'apis/product';
 
 const initForm = {
   productModelId: '',
@@ -12,12 +12,39 @@ const initForm = {
   recommendedSellingPrice: '',
 };
 
+function findCategoryById(nodes, id) {
+  if (!id) return null;
+  for (const n of nodes || []) {
+    if (String(n?.id) === String(id)) return n;
+    const found = findCategoryById(n?.children, id);
+    if (found) return found;
+  }
+  return null;
+}
+
 const ProductCreateModalCp = ({ onClose, onCreated }) => {
   const [form, setForm] = useState(initForm);
   const [warnings, setWarnings] = useState({});
+  const [categoryTree, setCategoryTree] = useState([]);
+
+  useEffect(() => {
+    const apiSucc = (res) => {
+      if (res.success) setCategoryTree(res.data || []);
+    };
+    apiProductCategoryFindAll(apiSucc);
+  }, []);
+
+  const selectedCategory = useMemo(
+    () => findCategoryById(categoryTree, form.productCategoryId),
+    [categoryTree, form.productCategoryId]
+  );
 
   const setField = (key) => (value) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+    setForm((prev) => {
+      const next = { ...prev, [key]: value };
+      if (key === 'productCategoryId') next.productModelId = '';
+      return next;
+    });
     if (warnings[key]) setWarnings((prev) => ({ ...prev, [key]: '' }));
   };
 
@@ -25,7 +52,6 @@ const ProductCreateModalCp = ({ onClose, onCreated }) => {
 
   const onClickSubmit = () => {
     const nextWarnings = {
-      productModelId: form.productModelId ? '' : '모델명을 선택해 주세요.',
       productCategoryId: form.productCategoryId ? '' : '제품군을 선택해 주세요.',
       name: form.name.trim() ? '' : '제품명을 입력해 주세요.',
       recommendedSellingPrice: form.recommendedSellingPrice !== '' ? '' : '권장 판매 단가를 입력해 주세요.',
@@ -34,7 +60,7 @@ const ProductCreateModalCp = ({ onClose, onCreated }) => {
     if (Object.values(nextWarnings).some((v) => v)) return;
 
     const obj = {
-      productModelId: Number(form.productModelId),
+      productModelId: form.productModelId ? Number(form.productModelId) : null,
       productCategoryId: Number(form.productCategoryId),
       name: form.name,
       note: form.note,
@@ -77,16 +103,12 @@ const ProductCreateModalCp = ({ onClose, onCreated }) => {
 
           <div className="sr_field">
             <label>모델명</label>
-            <CommEntitySelectCp
+            <ProductModelSelectCp
               value={form.productModelId}
               setValue={setField('productModelId')}
-              fetchApi={apiProductModelFindAll}
-              createApi={apiProductModelCreate}
-              addNewLabel="+) 모델 추가하기"
-              fieldLabel="모델명"
-              modalTitle="모델 추가"
+              categoryId={form.productCategoryId}
+              initialModels={selectedCategory?.productModels}
             />
-            {warnings.productModelId && <p className="warning_text">{warnings.productModelId}</p>}
           </div>
 
           <div className="sr_field">

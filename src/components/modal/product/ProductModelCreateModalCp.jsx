@@ -1,44 +1,43 @@
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { apiBuyerCreate } from 'apis/buyer';
+import { apiProductModelCreate } from 'apis/product';
 
-const BuyerCreateModalCp = ({ onClose, onCreated }) => {
+const ProductModelCreateModalCp = ({ categoryId, onClose, onCreated }) => {
   const [name, setName] = useState('');
   const [warning, setWarning] = useState('');
 
   const onClickSubmit = () => {
     if (!name.trim()) {
-      setWarning('발주처명을 입력해 주세요.');
+      setWarning('모델명을 입력해 주세요.');
       return;
     }
 
     const apiSucc = (res) => {
       if (res.success) {
-        const createdId = res?.data?.id ?? res?.data;
-        onCreated({ id: createdId, name });
+        onCreated(res.data || [], name);
         onClose();
       } else {
-        alert(res?.message || '발주처 등록에 실패하였습니다.');
+        alert(res?.message || '모델 등록에 실패하였습니다.');
       }
     };
-    apiBuyerCreate({ name }, apiSucc);
+    apiProductModelCreate({ productCategoryId: Number(categoryId), name }, apiSucc);
   };
 
   return (
     <div className="buyer_modal_overlay">
       <div className="buyer_create_modal">
         <div className="buyer_create_header">
-          <span>발주처 추가</span>
+          <span>모델 추가</span>
           <button type="button" onClick={onClose}>
             <IoClose size={16} />
           </button>
         </div>
 
         <div className="buyer_create_body">
-          <label>발주처명</label>
+          <label>모델명</label>
           <input
             type="text"
-            placeholder="발주처명을 입력해 주세요."
+            placeholder="모델명을 입력해 주세요."
             value={name}
             onChange={(e) => {
               setName(e.target.value);
@@ -58,4 +57,4 @@ const BuyerCreateModalCp = ({ onClose, onCreated }) => {
   );
 };
 
-export default BuyerCreateModalCp;
+export default ProductModelCreateModalCp;

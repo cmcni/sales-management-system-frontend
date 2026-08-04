@@ -13,7 +13,8 @@ const CommEntityCreateModalCp = ({ title, fieldLabel, createApi, onClose, onCrea
 
     const apiSucc = (res) => {
       if (res.success) {
-        onCreated(res.data);
+        const createdId = res?.data?.id ?? res?.data;
+        onCreated({ id: createdId, name });
         onClose();
       } else {
         alert(res?.message || '등록에 실패하였습니다.');
