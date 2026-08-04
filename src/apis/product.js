@@ -90,3 +90,16 @@ export async function apiProductSearch(obj, apiSucc) {
       apiSucc(error?.response?.data ?? { success: false, message: error.message });
     });
 }
+
+// 제품 목록을 검색 조건에 맞춰 엑셀로 다운로드합니다.
+// 파일(blob) 응답이라 success/data 규격이 아닌 별도 shape으로 콜백에 넘깁니다.
+export async function apiProductExportExcel(obj, apiSucc) {
+  await axiosInstance
+    .get(`${KEY_API.PRODUCT}/excel/export`, { params: obj, responseType: 'blob' })
+    .then((res) => {
+      apiSucc({ success: true, blob: res.data, headers: res.headers });
+    })
+    .catch((error) => {
+      apiSucc({ success: false, message: error.message });
+    });
+}

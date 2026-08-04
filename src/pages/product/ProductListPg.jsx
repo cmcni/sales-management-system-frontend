@@ -7,7 +7,8 @@ import CommEntitySelectCp from 'components/form/select/common/CommEntitySelectCp
 import ProductCreateModalCp from 'components/modal/product/ProductCreateModalCp';
 import { RiFileExcel2Line } from 'react-icons/ri';
 import { BsFileEarmarkPlus, BsFileEarmarkMinus } from 'react-icons/bs';
-import { apiProductSearch, apiProductModelFindAll, apiProductModelCreate, apiProductDelete } from 'apis/product';
+import { apiProductSearch, apiProductModelFindAll, apiProductDelete, apiProductExportExcel } from 'apis/product';
+import { today } from 'utils/date/moment';
 
 const buildCategoryPath = (category) => {
   const names = [];
@@ -42,6 +43,15 @@ const ProductListPg = () => {
     onClickSearch();
   }, []);
 
+  const buildSearchParams = () => {
+    const params = {};
+    if (productGroup) params.productCategoryId = productGroup;
+    if (modelName) params.productModelId = modelName;
+    if (productName) params.productModelName = productName;
+    if (recommendedPrice) params.productRecommendedSellingPrice = recommendedPrice;
+    return params;
+  };
+
   const onClickSearch = () => {
     const apiSucc = (res) => {
       if (res.success) {
@@ -58,11 +68,29 @@ const ProductListPg = () => {
         setSelectedIds([]);
       }
     };
-    const obj = {
-      productCategoryId: productGroup,
-      productModelId: modelName,
+    apiProductSearch(buildSearchParams(), apiSucc);
+  };
+
+  const onClickDownload = () => {
+    const apiSucc = (res) => {
+      if (!res.success) {
+        alert(res.message || '엑셀 다운로드에 실패하였습니다.');
+        return;
+      }
+      const disposition = res.headers?.['content-disposition'];
+      const filenameMatch = disposition?.match(/filename\*?=(?:UTF-8''|")?([^;"\n]+)/i);
+      const filename = filenameMatch ? decodeURIComponent(filenameMatch[1].replace(/"/g, '')) : `제품목록_${today()}.xlsx`;
+
+      const url = window.URL.createObjectURL(new Blob([res.blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
     };
-    apiProductSearch(obj, apiSucc);
+    apiProductExportExcel(buildSearchParams(), apiSucc);
   };
 
   const onClickDelete = () => {
@@ -123,10 +151,10 @@ const ProductListPg = () => {
           </button>
 
           <div className="action_btns">
-            {/* <button className="ghost_btn">
+            <button className="ghost_btn" onClick={onClickDownload}>
               <RiFileExcel2Line />
-              Excel
-            </button> */}
+              다운로드
+            </button>
             <button className="ghost_btn" onClick={() => setShowCreateModal(true)}>
               <BsFileEarmarkPlus />
               신규
